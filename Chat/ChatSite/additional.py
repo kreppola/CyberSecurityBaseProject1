@@ -25,10 +25,11 @@ def get_user_rooms(user):
 def search_messages_query(user_input, room):
     conn = sq.connect(db)
     cursor = conn.cursor()
-
     messages = []
-    #results = cursor.execute(f"SELECT user, pub_date, content FROM ChatSite_message WHERE room_nr={room} AND content LIKE '%{user_input}%'")
-    results = cursor.execute("""SELECT user, pub_date, content FROM ChatSite_message WHERE room_nr= ? AND content= ?""", (room,str(user_input)))
+    results = cursor.execute(f"SELECT user, pub_date, content FROM ChatSite_message WHERE room_nr={room} AND content LIKE '%{user_input}%'")
+    #user_input = '%' + user_input + '%'
+    #results = cursor.execute("""SELECT user, pub_date, content FROM ChatSite_message WHERE room_nr= ? AND content LIKE ?""", (room,str(user_input)))
     for res in results:
         messages.append(f"{res[0]} [{res[1][11:16]}]: {res[2]}")
     return messages
+
