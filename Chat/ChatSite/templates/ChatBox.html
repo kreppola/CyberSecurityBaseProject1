@@ -1,0 +1,50 @@
+<!DOCTYPE = html>
+    <head>
+    <title> Welcome to the ChatSite </title>
+    <h1> Welcome to the ChatSite </h1>
+    </head>
+
+    <body>
+    <h2> Messages in Room {{room}} </h1>
+
+    {% autoescape off %}
+    {% for msg in messages %}
+    <ul>{{msg}}</ul>
+    {% endfor %}
+    {% endautoescape %}
+
+    <h3>Add Message</h3>
+        <form action="/add/" method="POST">
+            <input type="hidden" name="room" value={{room}} />
+            <input type="text" name="content"/>
+            <input type="submit"/>
+        </form>
+    </h3>
+
+    <h3>Add Private Room with:</h3>
+        <form action="/addRoom/" method="POST">
+            <input type="text" name="member2"/>
+            <input type="submit"/>
+        </form>
+    </h3>
+
+    <h3>Search for message</h3>
+        <form action="/search/" method="GET">
+            <input type="text" name="query"/>
+            <input type="hidden" name="room" value={{room}} />
+            <input type="submit"/>
+        </form>
+    </h3>
+
+    <h3> Main room </h3>
+    <form action="/" method="GET" />
+        <input type="submit"/>
+    </form>
+    <h3> My private Rooms </h3>
+        {% for r in user_rooms %}
+        <h3> Room {{r}} </h3>
+        <form action="/privateRoom/" method="GET">
+            <input type="hidden" name="room" value={{r}} />
+            <input type="submit"/>
+        </form>
+        {% endfor %}
